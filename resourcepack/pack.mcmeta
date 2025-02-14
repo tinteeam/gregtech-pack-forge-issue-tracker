@@ -1,0 +1,8 @@
+{
+    "name": "gregtech-pack-forge-rp",
+    "description": "GregTech Pack Forge Resource Pack",
+    "pack": {
+        "pack_format": 15,
+        "description": "Guide Book"
+    }
+}
