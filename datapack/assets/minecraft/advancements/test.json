@@ -1,0 +1,21 @@
+{
+    "criteria": {
+        "test": {
+            "trigger": "minecraft:stick"
+        }
+    },
+    "display": {
+      "title": {
+        "text": "Energy Acceptor"
+      },
+      "description": {
+        "text": "Craft the Energy Acceptor from Applied Energistics 2."
+      },
+      "icon": {
+        "item": "ae2:energy_acceptor"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true
+    }
+  }

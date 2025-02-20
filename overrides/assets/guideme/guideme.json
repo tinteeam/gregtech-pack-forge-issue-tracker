@@ -1,0 +1,19 @@
+{
+    "guides": {
+      "gt_guide": {
+        "title": "GregTech Modpack Guide",
+        "path": "guides/gregtech_guide.md",
+        "description": "An introduction and guide to GregTech's complex systems.",
+        "category": "modpack",
+        "lang": "en_us"
+      },
+      "pack_index": {
+        "title": "GuideMe Index",
+        "path": "guides/pack_index.md",
+        "description": "An index of all available guides.",
+        "category": "modpack",
+        "lang": "en_us"
+      }
+    }
+  }
+  
