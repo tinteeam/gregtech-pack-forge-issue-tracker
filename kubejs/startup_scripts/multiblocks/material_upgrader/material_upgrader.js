@@ -1,32 +1,48 @@
 GTCEuStartupEvents.registry('gtceu:machine', event => {
-    event.create("material_upgrader", "multiblock")
-        .rotationtype(RotationState.NON_Y_AXIS)
-        .recipeType("material_upgrading")
-        .appearanceBlock(GTBlocks.MACHINE_CASING_ULV)
-        .recipeModifier(GTRecipeModifiers.OC_NON_PERFECT)
-        .pattern((definition) =>
-            FactoryBlockPattern.start()
-              .aisle("0BBB0", "0BBB0", "0BBB0", "0BBB0")
-              .aisle("BBBBB", "BDDDB", "B###B", "BGGGB")
-              .aisle("BBBBB", "BDDDB", "B###B", "BGGGB")
-              .aisle("BBBBB", "BDDDB", "B###B", "BGGGB")
-              .aisle("0BBB0", "0BEB0", "0BBB0", "0BBB0")
-              .where("E", Predicates.controller(Predicates.blocks(definition.get())))
-              .where("D", Predicates.blocks("minecraft:furnace"))
-              .where("G", Predicates.blocks("gtceu:tempered_glass"))
-              .where(
-                "B",
-                Predicates.blocks("gtceu:ulv_machine_casing")
-                  .setMinGlobalLimited(5)
-                  .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-              )
-              .where("#", Predicates.air())
-              .where("0", Predicates.any())
-              .build()
+  event.create('material_upgrader', 'multiblock')
+      .rotationState(RotationState.NON_Y_AXIS)
+      .recipeType('material_upgrader') // Custom Recipe Type
+      .appearanceBlock(GTBlocks.CASING_TITANIUM_SOLID) // Default appearance
+
+      .pattern(definition => FactoryBlockPattern.start()
+          .aisle('CCC', 'CGC', 'CGC', 'CLC', 'CCC') // Top layer
+          .aisle('CMC', 'GSG', 'G#G', 'LIL', 'COE') // Middle layer (Energy input added)
+          .aisle('CKC', 'CGC', 'CGC', 'CLC', 'CNC') // Bottom layer
+
+          // Controller Block (Machine Core)
+          .where('K', Predicates.controller(Predicates.blocks(definition.getSelf()))) // ✅ Fix
+
+          // Core Upgrading Component (Furnace)
+          .where('M', Predicates.blocks('minecraft:furnace'))
+
+          // Glass Casing (Using Quartz Glass)
+          .where('G', Predicates.blocks('ae2:quartz_glass'))
+
+          // Power Input Block (Glowstone)
+          .where('I', Predicates.blocks('glowstone'))
+
+          // Support Casings
+          .where('L', Predicates.blocks(GTBlocks.CASING_GRATE.get()))
+          .where('C', Predicates.blocks(GTBlocks.CASING_TITANIUM_SOLID.get())
+              .or(Predicates.autoAbilities(definition.getRecipeTypes()))
           )
-          .workableCasingRenderer(
-            "gtceu:block/casings/voltage/ulv/side",
-            "gtceu:block/multiblock/implosion_compressor",
-            true
-          );
-})
+
+          // Muffler and Maintenance Slots
+          .where('O', Predicates.abilities(PartAbility.MUFFLER).setExactLimit(1))
+          .where('N', Predicates.abilities(PartAbility.MAINTENANCE))
+
+          // **Energy Input Slot (Fixed)**
+          .where('E', Predicates.abilities(PartAbility.ENERGY_INPUT).setMinGlobalLimited(1)) // ✅ Fix
+
+          // Empty Air Space
+          .where('#', Predicates.air())
+
+          .build()
+      )
+
+      .workableCasingRenderer(
+          'gtceu:block/casings/solid/machine_casing_solid_titanium', 
+          'gtceu:block/multiblock/implosion_compressor', 
+          false
+      );
+});
